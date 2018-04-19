@@ -4,6 +4,7 @@
 #include<vector>
 #include<queue>
 #include<functional>
+#include<map>
 
 
 using namespace std;
@@ -16,7 +17,7 @@ public:
 	bool InsertJob();
 	bool RunJob();
 	Job FindShortest();
-	bool CheckAvailability();
+	bool CheckAvailability( const Job &curJob);
 	Job DeleteShortest();
 	bool decrementTimer();
 	bool ReleaseProcs();
@@ -24,6 +25,10 @@ public:
 
 
 private:
-	vector<Job> runningJobs;
+	map<int, Job> runningJobs; // A map of all running Jobs, with the int ID as the key for finding specific maps although it is not needed
 	priority_queue<Job, vector<int>, greater<int>> WaitQueue;
+	int tickNum;
+	int availableProc;
+	int maxProc;
+
 };

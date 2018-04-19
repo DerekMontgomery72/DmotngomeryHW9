@@ -1,4 +1,5 @@
 #include "scheduler.h"
+c#include "scheduler.h"
 
 /*
 Runs through 1 tick in the scheduler
@@ -25,6 +26,30 @@ bool scheduler::Tick()
 {
 	return false;
 }
+bool scheduler::RunJob()
+{
+	Job Cur(this->DeleteShortest());
+	int key = Cur.getId();
+
+}
+Job scheduler::FindShortest()
+{
+	 Job newJob(waitQeueue.peek());
+
+	return newJob;
+
+}
+
+bool scheduler::CheckAvailability(const Job & curJob)
+{
+	if (curJob.getProc() > this->availableProc) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
 /*
 Used to insert a new job into the waitQueue
 
@@ -33,6 +58,29 @@ To do:
 2. Enter the job into the waitqueu
 */
 bool scheduler::InsertJob(Job newJob)
+{
+	return false;
+}
+
+Job scheduler::DeleteShortest()
+{
+	Job shortest(waitQueue.pop());
+	return shortest;
+}
+
+bool scheduler::decrementTimer()
+{
+	for (std::map<int, Job>::iterator it = this->runningJobs.begin(); it != runningJobs.end(); ++i) {
+		it->second.setTicks((it->second.getTicks() - 1));
+	}
+	this->tickNum = tickNum + 1;
+}
+/*
+Function to release the Processors after a job is removed from the running jobs list. The processors are labeled with an integer value
+and not a complete class. I may set the processors to be their own class containing a job within them to represent the current job that 
+each processor is running, although this may be redundant and not needed
+*/
+bool scheduler::ReleaseProcs()
 {
 	return false;
 }
