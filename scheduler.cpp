@@ -1,5 +1,4 @@
 #include "scheduler.h"
-c#include "scheduler.h"
 
 /*
 Runs through 1 tick in the scheduler
@@ -26,21 +25,51 @@ bool scheduler::Tick()
 {
 	return false;
 }
-bool scheduler::RunJob()
-{
-	Job Cur(this->DeleteShortest());
-	int key = Cur.getId();
+/*
+Used to insert a new job into the waitQueue
 
+To do:
+1. Run checks to be sure the job is valid
+2. Enter the job into the waitqueu
+*/
+bool scheduler::InsertJob(Job &newJob)
+{
+	WaitQueue.push(newJob);
+	return true;
 }
+/*
+Function to move a job into the running jobs map
+Once a job is in the map its ticks will begin to be decremented until it is finished and needs removed
+
+To do:
+1. Create checks to be sure the job is valid to be entered into the map
+2. Enter the job into the map
+*/
+bool scheduler::RunJob(Job &newJob)
+{
+	return false;
+}
+/*
+Function to find the next shortest job in the waitQueue Will use peek, so the Job is not removed from the queue
+It will then return a copy of the next shortest job, so any comparisons that need to be made can be
+To do:
+1. Peek into the waitQueue
+2. Assign a copy using this, and then return it for comparison/may call checkAvailabilty() in here so that the comparison can made in case the job needs to be inserted
+
+*/
 Job scheduler::FindShortest()
 {
-	 Job newJob(waitQeueue.peek());
-
-	return newJob;
-
+	return WaitQueue.top();
 }
-
-bool scheduler::CheckAvailability(const Job & curJob)
+/*
+Function to check the availabilty of the processors, If there is enough processors to run the job that is passed in then
+the function will return true, otherwise will return false.
+To do:
+1. Pass in a job
+2. Check if the number of available processors is less than the processors needed to run this process
+3. Return a value
+*/
+bool scheduler::CheckAvailability(const Job &curJob)
 {
 	if (curJob.getProc() > this->availableProc) {
 		return false;
@@ -50,37 +79,7 @@ bool scheduler::CheckAvailability(const Job & curJob)
 	}
 }
 
-/*
-Used to insert a new job into the waitQueue
-
-To do:
-1. Run checks to be sure the job is valid
-2. Enter the job into the waitqueu
-*/
-bool scheduler::InsertJob(Job newJob)
+void scheduler::DeleteShortest()
 {
-	return false;
-}
-
-Job scheduler::DeleteShortest()
-{
-	Job shortest(waitQueue.pop());
-	return shortest;
-}
-
-bool scheduler::decrementTimer()
-{
-	for (std::map<int, Job>::iterator it = this->runningJobs.begin(); it != runningJobs.end(); ++i) {
-		it->second.setTicks((it->second.getTicks() - 1));
-	}
-	this->tickNum = tickNum + 1;
-}
-/*
-Function to release the Processors after a job is removed from the running jobs list. The processors are labeled with an integer value
-and not a complete class. I may set the processors to be their own class containing a job within them to represent the current job that 
-each processor is running, although this may be redundant and not needed
-*/
-bool scheduler::ReleaseProcs()
-{
-	return false;
+	WaitQueue.pop();
 }

@@ -33,4 +33,9 @@ private:
 	int proc;
 };
 
+class myComparator {
+	int operator() (const Job &j1, const Job &j2) {
+		return j1.getTicks() > j2.getTicks();
+	}
+};
 

@@ -6,6 +6,7 @@
 
 class TestDriver {
 public:
+	void runTest();
 
 
 
