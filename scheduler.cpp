@@ -17,9 +17,6 @@ To Do:
 	shortest job, or the wait queue becomes empty
 Return True if the tick runs successfully
 If an invalid job is entered then print an appropriate error message
-
-
-
 */
 bool scheduler::Tick()
 {
@@ -47,7 +44,8 @@ To do:
 */
 bool scheduler::RunJob(Job &newJob)
 {
-	return false;
+	int id = newJob.getId();
+	runningJobs.insert(std::pair<int, Job>(id, newJob));
 }
 /*
 Function to find the next shortest job in the waitQueue Will use peek, so the Job is not removed from the queue
@@ -82,4 +80,23 @@ bool scheduler::CheckAvailability(const Job &curJob)
 void scheduler::DeleteShortest()
 {
 	WaitQueue.pop();
+}
+
+bool scheduler::decrementTimer()
+{
+	for (std::map<int, Job>::iterator it = runningJobs.begin(); it != runningJobs.end; it++) {
+		it->second.setTicks(it->second.getTicks() - 1);
+	}
+}
+
+bool scheduler::ReleaseProcs()
+{
+	for (std::map<int, Job>::iterator it = runningJobs.begin(); it != runningJobs.end(); it++) {
+		if (it->second.getTicks() == 0) {
+			availableProc = availableProc + it->second.getProc();
+			cout << "The process " << it->second.getDescript() << "has finished running." << endl;
+			runningJobs.erase(it);
+		}
+		
+	}
 }
