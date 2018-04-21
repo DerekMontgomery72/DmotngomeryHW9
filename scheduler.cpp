@@ -20,7 +20,26 @@ If an invalid job is entered then print an appropriate error message
 */
 bool scheduler::Tick()
 {
-	return false;
+	
+	int choice = 0, Ticks, procs, ;
+	string typed, jobID;
+
+	do {
+		cout << "How would you like to enter a new Job into the system:\n";
+		cout << " Manual or Through the input file\n";
+		cout << "Enter manual, or file" << endl;
+		cin >> typed;
+		if (typed == "manaul") {
+			//get job through user input
+			// also allow for the user to enter exit command to exit the program
+		}
+		else if (typed == "file") {
+			//get job from the input file
+
+		}
+
+
+	}
 }
 /*
 Used to insert a new job into the waitQueue
