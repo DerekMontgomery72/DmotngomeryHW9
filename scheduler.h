@@ -21,6 +21,8 @@ public:
 	void DeleteShortest();
 	bool decrementTimer();
 	bool ReleaseProcs();
+	Job UserInput();
+	Job fromFile();
 	
 
 
@@ -31,5 +33,5 @@ private:
 	int availableProc;
 	int maxProc;
 	int Mode; // An integer value to distinguish between running from a file, or through user input to insert each file.
-
+	int TotalJobsEntered;
 };

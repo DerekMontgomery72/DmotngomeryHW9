@@ -1,5 +1,13 @@
 #include "event.h"
 
+Job::Job()
+{
+	this->jobId = -1;
+	this->jobDescript = "null";
+	this->ticks = 0;
+	this->proc = 0;
+}
+
 Job::Job(int jobId, string descript, int nticks, int nproc)
 {
 	this->jobId = jobId;
@@ -20,6 +28,14 @@ Job::Job(const Job & copy)
 Job::~Job()
 {
 	// Nothing Needed in here right now
+}
+
+void Job::operator=(const Job & j1)
+{
+	this->jobId = j1.getId();
+	this->jobDescript = j1.getDescript();
+	this->ticks = j1.getTicks();
+	this->proc = j1.getProc();
 }
 
 int Job::getId() const
